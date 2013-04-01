@@ -32,13 +32,14 @@
      var pushButtonClicked = function() {
          if (currentContext >= contexts.length) return;
 
-         ContextStar.push(contexts[currentContext]);
-         currentContext++;
+         ContextStar.push(contexts[currentContext++]);
      }
 
      var popButtonClicked = function() {
-         ContextStar.pop();
+        console.log(currentContext);
          currentContext--;
+         ContextStar.pop();
+
          if (currentContext < 0) {
              currentContext = 0;
          }
@@ -61,13 +62,13 @@
 
          ContextStar.push(contexts[0]);
          ContextStar.bind(welcomeText, "Welcome #{name}");
-         ContextStar.bind(welcomeParagraph, function(stackTop) {
+         ContextStar.bind(welcomeParagraph, function(stackTop, element) {
             console.log(stackTop);
             if (stackTop.isAdmin) {
-                return "Hail supreme admin!";
+                element.innerHTML =  "Hail supreme admin!";
             }
             else {
-                return "Lowely peasent!";
+                element.innerHTML =  "Lowely peasent!";
             }
          });
      }

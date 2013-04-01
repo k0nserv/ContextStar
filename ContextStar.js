@@ -17,8 +17,7 @@
             callback = event.callback;
 
         if (typeof callback !== "undefined") {
-            string = callback.apply(undefined, [this._stack[this._stack.length - 1]]);
-            element.innerHTML = string;
+            string = callback.apply(undefined, [this._stack[this._stack.length - 1], element]);
         } else {
             element.innerHTML = ContextStar.stringify(string);
         }
@@ -34,15 +33,17 @@
     }
 
     var ContextStar = {
-         _stack  : new Array,
-         _regex  : /#{([^{]*)}/g,
-         _events : new Array
+        _stack: new Array,
+        _regex: /#{([^{]*)}/g,
+        _events: new Array
     };
 
 
     ContextStar.pop = function() {
-        this._stack.pop();
-        stackChangedEvent.apply(this);
+        if (this._stack.length !== 0) {
+            this._stack.pop();
+            stackChangedEvent.apply(this);
+        }
 
         return this;
     }
