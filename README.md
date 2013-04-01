@@ -53,7 +53,33 @@ Poping the stack works like you'd suspect
 
 This will once again print `Paul likes to drink beer on the porch!` to the console.
 
+###Binding Events
+Values can be bound to certain DOM elements and will be updated accordingly when the context is pushed or popped.
+
+**Example:**
+
+```
+    var someElement = document.getElementById("welcomeHeader");
+
+    ContextStar.bind(someElement, "Welcome #{name}!");
+```
+
+**You can also use callbacks**
+
+```
+
+    ContextStar.bind(someElement, function(stackTop) {
+        console.log(stackTop);//The most recent stackframe added
+
+        //Be mindful when using this as the stackTop might not have defined the property name
+        return "Hello there "+ stackTop.name;
+    });
+```
+
+*For a more detailed example checkout index.html*
 
 License
 =======
+
+MIT Licensed
 	
