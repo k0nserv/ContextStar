@@ -1,0 +1,31 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <script src="ContextStar.js"></script>
+</head>
+<body>
+
+
+
+    <script>
+        ContextStar.push({
+            name    : "Hugo Tunius",
+            place   : "Hell",
+            drink   : "beer"
+        });
+
+        console.log(ContextStar.stringify("Hello #{name}! Welcome to #{place}."));
+        
+        ContextStar.push({
+            place : "Heaven"
+        });
+
+        console.log(ContextStar.stringify("#{place} sure is hot right now, don't you think #{name}"));
+
+        ContextStar.pop();
+
+        console.log(ContextStar.stringify("#{place} has a nice bar though. Might as we get a cold #{drink}!"));
+
+    </script>
+</body>
+</html>
