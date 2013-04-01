@@ -10,7 +10,7 @@ ContextStar let's you create context sensitive strings by using a special syntax
 First add `ContextStar.js` to your document.
 
 ```
-	var stringSource = "#{name} likes to drink #{drink} on the #{porch}!";
+	var stringSource = "#{name} likes to drink #{drink} on the #{place}!";
 	
 	/* ContextStar uses a global context stack to specify information */
 	/* Here we push some information on to the stack */
