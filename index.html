@@ -4,28 +4,80 @@
     <script src="ContextStar.js"></script>
 </head>
 <body>
+    <h1 id="welcomeHeader"></h1>
+    <p id="welcomeParagraph">
 
+    </p>
 
+    <input type="button" id="push" value="Push Context"/>
+    <input type="button" id="pop" value="Pop Context"/>
 
-    <script>
-        ContextStar.push({
-            name    : "Hugo Tunius",
-            place   : "Hell",
-            drink   : "beer"
-        });
+<script>
+ (function() {
+     var contexts = [{
+         name: "Guest",
+         isAdmin: false
+     }, {
+         name: "User",
+         isAdmin: false
+     }, {
+         name: "Admin",
+         isAdmin: true
+     }, {
+         name: "Super Admin",
+         isAdmin: true
+     }];
+     var currentContext = 1;
 
-        console.log(ContextStar.stringify("Hello #{name}! Welcome to #{place}."));
-        
-        ContextStar.push({
-            place : "Heaven"
-        });
+     var pushButtonClicked = function() {
+         if (currentContext >= contexts.length) return;
 
-        console.log(ContextStar.stringify("#{place} sure is hot right now, don't you think #{name}"));
+         ContextStar.push(contexts[currentContext]);
+         currentContext++;
+     }
 
-        ContextStar.pop();
+     var popButtonClicked = function() {
+         ContextStar.pop();
+         currentContext--;
+         if (currentContext < 0) {
+             currentContext = 0;
+         }
+     }
 
-        console.log(ContextStar.stringify("#{place} has a nice bar though. Might as we get a cold #{drink}!"));
+     var init = function() {
+         console.log("Binding events");
+         var welcomeText        = document.getElementById('welcomeHeader'),
+             welcomeParagraph   = document.getElementById('welcomeParagraph')
+             pushButton         = document.getElementById('push'),
+             popButton          = document.getElementById('pop');
 
-    </script>
+         if (window.addEventListener) {
+             pushButton.addEventListener('click', pushButtonClicked, false);
+             popButton.addEventListener('click', popButtonClicked, false);
+         } else {
+             window.attachEvent('click', pushButtonClicked);
+             window.attachEvent('click', popButtonClicked);
+         }
+
+         ContextStar.push(contexts[0]);
+         ContextStar.bind(welcomeText, "Welcome #{name}");
+         ContextStar.bind(welcomeParagraph, function(stackTop) {
+            console.log(stackTop);
+            if (stackTop.isAdmin) {
+                return "Hail supreme admin!";
+            }
+            else {
+                return "Lowely peasent!";
+            }
+         });
+     }
+
+     if (window.addEventListener) {
+         window.addEventListener('load', init, false);
+     } else {
+         window.attachEvent('load', init);
+     }
+ })();
+</script>
 </body>
 </html>
