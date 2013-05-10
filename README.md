@@ -5,7 +5,7 @@ Javascript context sensitive strings.
 
 Usage
 ===========
-ContextStar let's you create context sensitive strings by using a special syntax.
+ContextStar lets you create context sensitive strings by using a special syntax.
 
 First add `ContextStar.js` to your document.
 
