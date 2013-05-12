@@ -1,6 +1,9 @@
 (function() {
     "use strict";
 
+    var INVALID_PARAMETERS = 0;
+
+
     var firstOccurrence = function(stack, property) {
         for (var i = stack.length - 1; i >= 0; --i) {
             if (typeof stack[i][property] !== "undefined") {
@@ -9,19 +12,19 @@
         }
 
         return undefined;
-    }
+    };
 
     var executeEvent = function(event) {
-        var string = event.src,
+            var string = event.src,
             element = event.element,
             callback = event.callback;
-
+            
         if (typeof callback !== "undefined") {
             string = callback.apply(undefined, [this._stack[this._stack.length - 1], element]);
         } else {
             element.innerHTML = ContextStar.stringify(string);
         }
-    }
+    };
 
     var stackChangedEvent = function() {
         var self = this;
@@ -30,6 +33,12 @@
 
             return event;
         });
+    };
+
+    var ContextStartException = function(message, error, name) {
+        this.message = message;
+        this.error   = error;
+        this.name    = name;
     }
 
     var ContextStar = {
@@ -78,7 +87,9 @@
 
     ContextStar.bind = function(element, second) {
         if (typeof element === "undefined" || typeof second === "undefined") {
-            return; /* TODO error*/
+            throw new ContextStartException("Invalid parameters for bind(element, second).",
+                                            "ContextStartExceptionInvalidParameter",
+                                            INVALID_PARAMETERS);
         }
 
         var event = {};
